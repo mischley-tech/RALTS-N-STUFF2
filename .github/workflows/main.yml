@@ -4,9 +4,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Extract and Patch Project
-        run: |
+       - uses: actions/checkout@v4
+       - name: Extract and Patch Project
+         run: |
           rm -rf app build.gradle.kts settings.gradle.kts gradle.properties
           SELECTED=""
           for z in *.zip; do
@@ -18,24 +18,24 @@ jobs:
           SELECTED=$(ls -t *.zip 2>/dev/null | head -n 1)
           fi
          echo "Using project archive: $SELECTED"
-        unzip -o "$SELECTED"
-
-      - uses: actions/setup-java@v4
-        with:
+          unzip -o "$SELECTED"
+        
+       - uses: actions/setup-java@v4
+         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Accept Android SDK Licenses
-        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+       - name: Accept Android SDK Licenses
+       - run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
-      - uses: gradle/actions/setup-gradle@v4
+       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
 
-      - name: Build Debug APK
-        run: gradle assembleDebug --no-daemon
+       - name: Build Debug APK
+         run: gradle assembleDebug --no-daemon
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: RaltsEmeraldPet-Pixel-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
+        - uses: actions/upload-artifact@v4
+         with:
+           name: RaltsEmeraldPet-Pixel-APK
+           path: app/build/outputs/apk/debug/app-debug.apk
