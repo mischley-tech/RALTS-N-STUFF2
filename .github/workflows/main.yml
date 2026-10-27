@@ -6,6 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+
       - name: Extract and Patch Project
         run: |
           rm -rf app build.gradle.kts settings.gradle.kts gradle.properties
